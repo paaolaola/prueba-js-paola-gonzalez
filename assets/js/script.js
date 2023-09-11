@@ -7,7 +7,7 @@ const select = document.getElementById("select");
 const btn = document.getElementById("btn");
 const result = document.getElementById("resultConv");
 
-// Función para obtener data
+//Obtener data con metodo fetch y try y catch
 const getValues = async () => {
     try {
         const resUSD = await fetch("https://mindicador.cl/api/dolar");
