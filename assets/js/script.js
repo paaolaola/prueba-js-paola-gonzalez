@@ -23,7 +23,8 @@ const getValues = async () => {
         data.eur = valuesEUR.serie[0].valor;
     } catch (e) {
         console.error("Error al obtener los valores de conversión:", e);
-        alert("Se ha producido un error al obtener los valores de conversión.");
+        const error = document.getElementById("error");
+        error.innerHTML = "Se ha producido un error al obtener los valores de conversión.";
     }
 };
 
@@ -111,7 +112,8 @@ const getGraphic = async () => {
         chart.render();
     } catch (error) {
         console.error("Error al obtener los valores:", error);
-        alert("Se ha producido un error al obtener los valores.");
+        const errorDate = document.getElementById("error");
+        errorDate.innerHTML = "Se ha producido un error al obtener los valores.";
     }
 };
 

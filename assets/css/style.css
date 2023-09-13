@@ -45,3 +45,7 @@ button {
     margin: 100px;
     padding: 30px;
 }
+
+.error {
+    color: white;
+}
