@@ -1,6 +1,3 @@
-Link repositorio
-https://github.com/paaolaola/prueba-js-paola-gonzalez
-
 Link API Dolar
 https://mindicador.cl/api/dolar
 
