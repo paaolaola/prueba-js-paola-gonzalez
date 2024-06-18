@@ -4,28 +4,30 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="assets/css/style.css" />
-        <title>Prueba - Paola Gonzalez</title>
+        <title>Conversor de monedas Nacional</title>
     </head>
+    <!-- Sección de body -->
     <body>
-        <!-- Conversor de moneda-->
         <h1>Conversor de monedas Nacional</h1>
         <span id="error" class="error"></span>
         <div class="box-container">
             <h2>Pesos CLP</h2>
+            <label for="amountClp">Pesos CLP:</label>
             <input id="amountClp" type="number" class="clp" placeholder="Agrega un monto" />
-            <h4>Moneda a convertir</h4>
+            <label for="select">Moneda a convertir:</label>
             <select id="select" type="name" class="currency">
-                <option value="value1">Dolar</option>
-                <option value="value2" selected>Euro</option>
+                <option value="usd">Dolar</option>
+                <option value="eur" selected>Euro</option>
             </select>
             <button id="btn">Buscar</button>
             <h3>Resultado: <span id="resultConv">$0</span></h3>
         </div>
 
         <!-- Gráfico -->
-        <section>
+        <div class="box-chart">
             <div id="chart" class="chart"></div>
-        </section>
+        </div>
+
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script src="assets/js/script.js"></script>
     </body>

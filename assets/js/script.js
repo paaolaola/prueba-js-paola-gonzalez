@@ -1,73 +1,73 @@
-//CONVERSOR DE MONEDAS
-
-// Elementos del conversor
-let data = {};
+// LÓGICA DE CONVERSOR DE MONEDAS
+// Variables y constantes de elementos del DOM
+const data = {};
 const input = document.getElementById("amountClp");
 const select = document.getElementById("select");
 const btn = document.getElementById("btn");
 const result = document.getElementById("resultConv");
+const errorElement = document.getElementById("error");
 
-//Obtener data con metodo fetch y try y catch
-const getValues = async () => {
+// Función para obtener valores de la API
+const fetchCurrencyValues = async () => {
     try {
-        const resUSD = await fetch("https://mindicador.cl/api/dolar");
+        const res = await Promise.all([fetch("https://mindicador.cl/api/dolar"), fetch("https://mindicador.cl/api/euro")]);
 
-        const resEUR = await fetch("https://mindicador.cl/api/euro");
+        const [valuesUSD, valuesEUR] = await Promise.all(res.map((r) => r.json()));
 
-        const valuesUSD = await resUSD.json();
-        console.log(valuesUSD);
-        const valuesEUR = await resEUR.json();
-        console.log(valuesEUR);
-
+        // Asignar valores a las variables data de Dólar y Euro
         data.usd = valuesUSD.serie[0].valor;
         data.eur = valuesEUR.serie[0].valor;
     } catch (e) {
         console.error("Error al obtener los valores de conversión:", e);
-        const error = document.getElementById("error");
-        error.innerHTML = "Se ha producido un error al obtener los valores de conversión.";
+        errorElement.innerHTML = "Se ha producido un error al obtener los valores de conversión.";
     }
 };
 
-// Función de conversión
+// Función para convertir monedas y mostrar resultado en el DOM
 const convertCurrency = () => {
-    const amountCLP = input.value;
+    const amountCLP = parseFloat(input.value);
+    if (isNaN(amountCLP) || amountCLP <= 0) {
+        errorElement.textContent = "Por favor, ingresa un monto válido mayor a cero.";
+        return;
+    }
+    // Limpiar el mensaje de error si el monto es válido
+    errorElement.textContent = "";
     const selectedCurrency = select.value;
-
-    if (selectedCurrency === "value1") {
-        const amountUSD = amountCLP / data.usd;
-        result.textContent = `$${amountUSD.toFixed(2)}`;
-    } else if (selectedCurrency === "value2") {
-        const amountEUR = amountCLP / data.eur;
-        result.textContent = `€${amountEUR.toFixed(2)}`;
+    let convertedAmount = 0;
+    if (selectedCurrency === "usd") {
+        convertedAmount = amountCLP / data.usd;
+        result.textContent = `$${convertedAmount.toFixed(2)}`;
+    } else if (selectedCurrency === "eur") {
+        convertedAmount = amountCLP / data.eur;
+        result.textContent = `€${convertedAmount.toFixed(2)}`;
     }
 };
 
-// Evento del boton
+// Evento del botón para convertir monedas
 btn.addEventListener("click", convertCurrency);
 
-getValues();
+// Llamado a la función fetchCurrencyValues para obtener los valores de la API
+fetchCurrencyValues();
 
-//GRAFICO DE DOLAR Y EURO
-
-//Ejecución metodo fetch con try y catch
+// LÓGICA DE GRÁFICO DE DÓLAR Y EURO
+// Función para obtener los valores de la API y renderizar el gráfico
 const getGraphic = async () => {
     try {
-        const responseDolar = await fetch("https://mindicador.cl/api/dolar");
-        const responseEuro = await fetch("https://mindicador.cl/api/euro");
+        const res = await Promise.all([fetch("https://mindicador.cl/api/dolar"), fetch("https://mindicador.cl/api/euro")]);
 
-        const dataDolar = await responseDolar.json();
-        const dataEuro = await responseEuro.json();
+        const [dataDolar, dataEuro] = await Promise.all(res.map((r) => r.json()));
 
+        // Obtener los valores de los últimos 10 días
         const daysDolar = dataDolar.serie.slice(0, 10);
         const daysEuro = dataEuro.serie.slice(0, 10);
 
-        //Valores y fechas de datos de la API
+        // Obtener los valores y fechas de los últimos 10 días
         const valuesDolar = daysDolar.map((item) => item.valor);
         const valuesEuro = daysEuro.map((item) => item.valor);
         const dates = daysDolar.map((item) => item.fecha);
 
-        //Gráfico
-        var options = {
+        // Gráfico
+        const options = {
             series: [
                 {
                     name: "Dólar",
@@ -105,16 +105,16 @@ const getGraphic = async () => {
                 categories: dates,
             },
         };
-
+        // Instanciar el gráfico con ApexCharts
         const chart = new ApexCharts(document.querySelector("#chart"), options);
 
-        // Renderizar
+        // Renderizar el gráfico
         chart.render();
     } catch (error) {
-        console.error("Error al obtener los valores:", error);
-        const errorDate = document.getElementById("error");
-        errorDate.innerHTML = "Se ha producido un error al obtener los valores.";
+        console.error("Error al obtener los valores de la API:", error);
+        errorElement.innerHTML = "Se ha producido un error al obtener los valores.";
     }
 };
 
+// Llamado a la función getGraphic para renderizar el gráfico
 getGraphic();

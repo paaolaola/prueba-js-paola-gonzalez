@@ -1,51 +1,105 @@
 body {
     background-color: rgb(59, 59, 59);
-    height: 100vh;
     text-align: center;
+    min-height: 100vh;
 }
 
+/*Form*/
 .box-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: auto;
+    width: 30%;
     background-color: grey;
     color: white;
-    padding: 30px 20px;
-    width: 300px;
-    position: relative;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 h1 {
-    color: white;
-    border-bottom: 1px solid rgb(255, 174, 0);
+    color: rgb(255, 174, 0);
+    border-bottom: 1px solid white;
     padding: 30px;
 }
-input {
-    padding: 10px 20px;
+h2 {
+    color: rgb(255, 174, 0);
+}
+.clp {
+    width: 50%;
+    height: 30px;
+    margin: 10px;
+    border-radius: 20px;
+    border-style: none;
     text-align: center;
 }
 
 .currency {
-    padding: 10px 60px;
+    width: 50%;
+    height: 30px;
+    margin: 10px;
+    border-radius: 20px;
+    border-style: none;
+    text-align: center;
 }
 button {
     background-color: rgb(255, 174, 0);
-    padding: 10px 70px;
-    border-radius: 5px;
+    border-radius: 20px;
     border-style: none;
     margin-top: 20px;
+    height: 30px;
+    width: 50%;
 }
 
+/*Gráfico*/
+.box-chart {
+    padding: 1rem 0;
+}
 .chart {
     background-color: rgb(255, 240, 240);
-    margin: 100px;
-    padding: 30px;
+    padding: 1.5rem;
+    margin: 4rem;
+    border-radius: 20px;
 }
 
+/*Error*/
 .error {
-    color: white;
+    color: red;
+}
+
+/*RESPONSIVE*/
+
+@media screen and (max-width: 768px) {
+    .box-container {
+        width: 90%;
+    }
+    .clp {
+        width: 50%;
+    }
+    .currency {
+        width: 50%;
+    }
+    button {
+        width: 50%;
+    }
+    .chart {
+        margin: 2rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .box-container {
+        width: 90%;
+    }
+    .clp {
+        width: 50%;
+    }
+    .currency {
+        width: 50%;
+    }
+    button {
+        width: 50%;
+    }
+    .chart {
+        margin: 1rem;
+    }
 }
